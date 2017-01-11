@@ -1,0 +1,30 @@
+﻿<Window x:Class="VIP_TX_Backup_Tool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VIP_TX_Backup_Tool"
+        mc:Ignorable="d"
+        Title="VIP-TX Backup Tool" Height="534" Width="526" ResizeMode="NoResize">
+    <Grid Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Height="504" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="ipListLabel" Content="Lista de IPs dos Encoders" HorizontalAlignment="Left" Margin="20,24,0,0" VerticalAlignment="Top" Foreground="Black" FontWeight="Bold" Height="26" Width="150"/>
+        <Button x:Name="bkpButton" Content="Backup" HorizontalAlignment="Left" Margin="222,235,0,0" VerticalAlignment="Top" Width="76" Click="bkpButton_Click" TabIndex="3" Height="20"/>
+        <TextBox x:Name="ipListTextBox" HorizontalAlignment="Left" Height="98" Margin="20,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Cursor="IBeam" BorderThickness="2,2,1,2" ToolTip="Forneça a lista de IPs dos Encoders" AcceptsReturn="True" TabIndex="0"/>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="292,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" TabIndex="1"/>
+        <Label x:Name="label" Content="Usuário:" HorizontalAlignment="Left" Margin="234,68,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
+        <Label x:Name="label_Copy" Content="Senha:" HorizontalAlignment="Left" Margin="234,112,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
+        <Label x:Name="label_Copy1" Content="Diretório dos Backups:" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top" Height="26" Width="129"/>
+        <TextBox x:Name="backupPathTextBox" HorizontalAlignment="Left" Height="23" Margin="154,183,0,0"  VerticalAlignment="Top" Width="283" TabIndex="3"/>
+        <Label x:Name="outputLabel" Content="Resultados:" HorizontalAlignment="Left" Margin="20,312,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Height="23" Margin="291,113,0,0"  VerticalAlignment="Top" Width="146" TabIndex="2"/>
+        <ScrollViewer Margin="20,344,20,20" BorderThickness="2">
+            <TextBlock x:Name="outputTextBlock" TextWrapping="Wrap" Background="#FFE4E4E4"/>
+        </ScrollViewer>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="20" Margin="20,280,0,0" VerticalAlignment="Top" Width="480" ToolTip="Barra de progresso" Minimum="0" Maximum="100" Value="0" Visibility="Hidden"/>
+
+
+    </Grid>
+</Window>
