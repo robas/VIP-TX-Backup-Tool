@@ -46,19 +46,19 @@ namespace VIP_TX_Backup_Tool
             {
                 //Thread encoderThread = new Thread(() => backupEncoder(ip));
                 //encoderThread.Start();
-               backupEncoder(ip);
+               backupEncoder(ip, usernameTextBox.Text, passwordBox.Password);
             }   
         }
 
         /*
          * Requests the encoder backup and saves it to a file
          */
-        private void backupEncoder(string encoderIp)
+        private void backupEncoder(string encoderIp, string username, string password)
         {
             outputTextBlock.Inlines.Add(encoderIp + ": ");
             string url = "http://" + encoderIp + "/backup/backup.cgi";
             string fileName = backupPathTextBox.Text + "\\" + encoderIp + ".tar";
-            getVipTxBackup2(url, usernameTextBox.Text, passwordBox.Password, fileName);
+            getVipTxBackup2(url, username, password, fileName);
             /*if (backupContent.Length != 0)
             {
                 //string fileName = backupPathTextBox.Text+"\\"+encoderIp + ".tar";
@@ -122,36 +122,6 @@ namespace VIP_TX_Backup_Tool
                 //return data;
             }
         }
-        private string getVipTxBackup(string url, string username, string password)
-        {
-            string backupContent = "";
-            Uri myUri = new Uri(url);
-            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
-            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
-
-            NetworkCredential myNetworkCredential = new NetworkCredential(username, password);
-            CredentialCache myCredentialCache = new CredentialCache();
-            myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
-
-            myHttpWebRequest.PreAuthenticate = true;
-            myHttpWebRequest.Credentials = myCredentialCache;
-            myHttpWebRequest.Timeout = 5000;
-
-            try
-            {
-                WebResponse myWebResponse = myHttpWebRequest.GetResponse();
-                Stream responseStream = myWebResponse.GetResponseStream();
-                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
-
-                backupContent = myStreamReader.ReadToEnd();
-            }
-            catch (System.Net.WebException e)
-            {
-                outputTextBlock.Inlines.Add("Erro ao comunicar com o Encoder. Mensagem: " + e.Message + "\n");
-            }
-            return backupContent;
-
-        }
 
         /*
          * Save the backup as a system file
@@ -182,6 +152,73 @@ namespace VIP_TX_Backup_Tool
             }
             
             return result;
+        }
+
+        private void ptzBkpButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> validIpList = getValidIpList();
+            outputTextBlock.Text = "";
+
+            outputTextBlock.Inlines.Add("Processando encoders...\n");
+
+            foreach (string ip in validIpList)
+            {
+                //Thread encoderThread = new Thread(() => backupEncoder(ip));
+                //encoderThread.Start();
+                backupPTZ(ip);
+            }
+        }
+
+        /*
+         * Example: Data-1.Ptz-1.Presets=[],[0,95,216330,10980,2976000,][3,1,20530,12300,2230000,][3,2,218800,13100,2230000,]
+         * 
+         * Example: Data-1.Ptz-1.Presets=[],
+         * 
+         */
+        private void backupPTZ(string ip)
+        {
+            string url = "http://" + ip + "/params/get.cgi?Data-1.Ptz-1.Presets";
+            string presets = vipTxRequest(url, usernameTextBox.Text, passwordBox.Password);
+            if (presets == "[],")
+            {
+                outputTextBlock.Inlines.Add(ip + ": Nenhum preset configurado.");
+            }
+            else
+            {
+                outputTextBlock.Inlines.Add(ip + ": " + presets);
+            }
+        }
+
+        private string vipTxRequest(string url, string username, string password)
+        {
+            string responseContent = "";
+
+            Uri myUri = new Uri(url);
+            WebRequest myWebRequest = HttpWebRequest.Create(myUri);
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)myWebRequest;
+
+            NetworkCredential myNetworkCredential = new NetworkCredential(username, password);
+            CredentialCache myCredentialCache = new CredentialCache();
+            myCredentialCache.Add(myUri, "Basic", myNetworkCredential);
+
+            myHttpWebRequest.PreAuthenticate = true;
+            myHttpWebRequest.Credentials = myCredentialCache;
+            myHttpWebRequest.Timeout = 5000;
+
+            try
+            {
+                WebResponse myWebResponse = myHttpWebRequest.GetResponse();
+                Stream responseStream = myWebResponse.GetResponseStream();
+                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                responseContent = myStreamReader.ReadToEnd();
+            }
+            catch (System.Net.WebException e)
+            {
+                outputTextBlock.Inlines.Add("Erro ao comunicar com o Encoder. Mensagem: " + e.Message + "\n");
+            }
+            return responseContent;
+
         }
     }
 }

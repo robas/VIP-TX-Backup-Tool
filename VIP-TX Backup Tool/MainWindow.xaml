@@ -6,25 +6,46 @@
         xmlns:local="clr-namespace:VIP_TX_Backup_Tool"
         mc:Ignorable="d"
         Title="VIP-TX Backup Tool" Height="534" Width="526" ResizeMode="NoResize">
-    <Grid Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Height="504" VerticalAlignment="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label x:Name="ipListLabel" Content="Lista de IPs dos Encoders" HorizontalAlignment="Left" Margin="20,24,0,0" VerticalAlignment="Top" Foreground="Black" FontWeight="Bold" Height="26" Width="150"/>
-        <Button x:Name="bkpButton" Content="Backup" HorizontalAlignment="Left" Margin="222,235,0,0" VerticalAlignment="Top" Width="76" Click="bkpButton_Click" TabIndex="3" Height="20"/>
-        <TextBox x:Name="ipListTextBox" HorizontalAlignment="Left" Height="98" Margin="20,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Cursor="IBeam" BorderThickness="2,2,1,2" ToolTip="Forneça a lista de IPs dos Encoders" AcceptsReturn="True" TabIndex="0"/>
-        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="292,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" TabIndex="1"/>
-        <Label x:Name="label" Content="Usuário:" HorizontalAlignment="Left" Margin="234,68,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
-        <Label x:Name="label_Copy" Content="Senha:" HorizontalAlignment="Left" Margin="234,112,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
-        <Label x:Name="label_Copy1" Content="Diretório dos Backups:" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top" Height="26" Width="129"/>
-        <TextBox x:Name="backupPathTextBox" HorizontalAlignment="Left" Height="23" Margin="154,183,0,0"  VerticalAlignment="Top" Width="283" TabIndex="3"/>
-        <Label x:Name="outputLabel" Content="Resultados:" HorizontalAlignment="Left" Margin="20,312,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Height="23" Margin="291,113,0,0"  VerticalAlignment="Top" Width="146" TabIndex="2"/>
-        <ScrollViewer Margin="20,344,20,20" BorderThickness="2">
-            <TextBlock x:Name="outputTextBlock" TextWrapping="Wrap" Background="#FFE4E4E4"/>
-        </ScrollViewer>
-        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="20" Margin="20,280,0,0" VerticalAlignment="Top" Width="480" ToolTip="Barra de progresso" Minimum="0" Maximum="100" Value="0" Visibility="Hidden"/>
 
+    <TabControl x:Name="tabControl">
+        <TabItem Header="Backup">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="ipListLabel" Content="Lista de IPs dos Encoders" HorizontalAlignment="Left" Margin="20,31,0,0" VerticalAlignment="Top" Foreground="Black" Height="26" Width="150"/>
+                <TextBox x:Name="ipListTextBox" HorizontalAlignment="Left" Height="98" Margin="20,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Cursor="IBeam" BorderThickness="1" ToolTip="Forneça a lista de IPs dos Encoders" AcceptsReturn="True" TabIndex="0"/>
+                <Button x:Name="bkpButton" Content="Backup Sistema" Margin="120,0,0,211" VerticalAlignment="Bottom" Click="bkpButton_Click" TabIndex="3" Height="20" HorizontalAlignment="Left" Width="102"/>
+                <Button x:Name="ptzBkpButton" Content="Backup PTZ" Margin="292,0,0,211" Click="ptzBkpButton_Click" TabIndex="3" HorizontalAlignment="Left" Width="102" Height="20" VerticalAlignment="Bottom" IsEnabled="False" ToolTip="Temporariamente desabilitado"/>
+                <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="292,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" TabIndex="1"/>
+                <Label x:Name="labelUsername" Content="Usuário:" HorizontalAlignment="Left" Margin="234,68,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
+                <Label x:Name="labelPassword" Content="Senha:" HorizontalAlignment="Left" Margin="234,112,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
+                <Label x:Name="labelBackupPath" Content="Diretório dos Backups:" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top" Height="26" Width="129"/>
+                <TextBox x:Name="backupPathTextBox" HorizontalAlignment="Left" Height="23" Margin="154,183,0,0"  VerticalAlignment="Top" Width="283" TabIndex="3"/>
+                <Label x:Name="outputLabel" Content="Resultados:" HorizontalAlignment="Left" Margin="20,312,0,0" VerticalAlignment="Top"/>
+                <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Height="23" Margin="291,113,0,0"  VerticalAlignment="Top" Width="146" TabIndex="2"/>
+                <ScrollViewer Margin="20,344,20,20" BorderThickness="2">
+                    <TextBlock x:Name="outputTextBlock" TextWrapping="Wrap" Background="#FFE4E4E4"/>
+                </ScrollViewer>
 
-    </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Backup PTZ" Visibility="Hidden">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="ipListLabelPTZ" Content="Lista de IPs dos Encoders" HorizontalAlignment="Left" Margin="20,24,0,0" VerticalAlignment="Top" Foreground="Black" FontWeight="Bold" Height="26" Width="150"/>
+                <TextBox x:Name="ipListTextBoxPTZ" HorizontalAlignment="Left" Height="98" Margin="20,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Cursor="IBeam" BorderThickness="1" ToolTip="Forneça a lista de IPs dos Encoders" AcceptsReturn="True" TabIndex="0"/>
+                <Button x:Name="bkpButtonPTZ" Content="Backup" HorizontalAlignment="Left" Margin="222,235,0,0" VerticalAlignment="Top" Width="76" Click="bkpButton_Click" TabIndex="3" Height="20"/>
+                <TextBox x:Name="usernameTextBoxPTZ" HorizontalAlignment="Left" Height="23" Margin="292,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" TabIndex="1"/>
+                <Label x:Name="labelUsernamePTZ" Content="Usuário:" HorizontalAlignment="Left" Margin="234,68,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
+                <Label x:Name="labelPasswordPTZ" Content="Senha:" HorizontalAlignment="Left" Margin="234,112,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
+                <Label x:Name="labelBackupPathPTZ" Content="Diretório dos Backups:" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top" Height="26" Width="129"/>
+                <TextBox x:Name="backupPathTextBoxPTZ" HorizontalAlignment="Left" Height="23" Margin="154,183,0,0"  VerticalAlignment="Top" Width="283" TabIndex="3"/>
+                <Label x:Name="outputLabelPTZ" Content="Resultados:" HorizontalAlignment="Left" Margin="20,312,0,0" VerticalAlignment="Top"/>
+                <PasswordBox x:Name="passwordBoxPTZ" HorizontalAlignment="Left" Height="23" Margin="291,113,0,0"  VerticalAlignment="Top" Width="146" TabIndex="2"/>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
